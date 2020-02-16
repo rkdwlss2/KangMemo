@@ -16,6 +16,7 @@
 		8D3E20E123F94E430024C253 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3E20E023F94E430024C253 /* Model.swift */; };
 		8D3E20E323F950F10024C253 /* MemoListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3E20E223F950F10024C253 /* MemoListTableViewController.swift */; };
 		8D3E20E623F958DC0024C253 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D3E20E523F958DC0024C253 /* ComposeViewController.swift */; };
+		8D74E8E723F9706600880663 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D74E8E623F9706600880663 /* UIViewController+Alert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		8D3E20E023F94E430024C253 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		8D3E20E223F950F10024C253 /* MemoListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoListTableViewController.swift; sourceTree = "<group>"; };
 		8D3E20E523F958DC0024C253 /* ComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
+		8D74E8E623F9706600880663 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				8D3E20D923F9479C0024C253 /* Info.plist */,
 				8D3E20D123F9479A0024C253 /* KxMemo.xcdatamodeld */,
 				8D3E20E223F950F10024C253 /* MemoListTableViewController.swift */,
+				8D74E8E623F9706600880663 /* UIViewController+Alert.swift */,
 			);
 			path = KxMemo;
 			sourceTree = "<group>";
@@ -169,6 +172,7 @@
 				8D3E20E623F958DC0024C253 /* ComposeViewController.swift in Sources */,
 				8D3E20CB23F9479A0024C253 /* SceneDelegate.swift in Sources */,
 				8D3E20E123F94E430024C253 /* Model.swift in Sources */,
+				8D74E8E723F9706600880663 /* UIViewController+Alert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
