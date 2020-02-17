@@ -77,7 +77,6 @@
 			isa = PBXGroup;
 			children = (
 				8D31031923FA70D700E3A5FF /* Data */,
-				8D3E20E423F958BA0024C253 /* New Group */,
 				8D3E20DF23F94E170024C253 /* Model */,
 				8D3E20C823F9479A0024C253 /* AppDelegate.swift */,
 				8D3E20CA23F9479A0024C253 /* SceneDelegate.swift */,
@@ -88,6 +87,7 @@
 				8D3E20D123F9479A0024C253 /* KxMemo.xcdatamodeld */,
 				8D3E20E223F950F10024C253 /* MemoListTableViewController.swift */,
 				8D74E8E623F9706600880663 /* UIViewController+Alert.swift */,
+				8D3E20E523F958DC0024C253 /* ComposeViewController.swift */,
 				8D31031723FA3DD500E3A5FF /* DetailViewController.swift */,
 			);
 			path = KxMemo;
@@ -99,14 +99,6 @@
 				8D3E20E023F94E430024C253 /* Model.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		8D3E20E423F958BA0024C253 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-				8D3E20E523F958DC0024C253 /* ComposeViewController.swift */,
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
