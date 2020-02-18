@@ -158,20 +158,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SrP-mH-cSd">
-                                <rect key="frame" x="0.0" y="56" width="414" height="752"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="508"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="miV-iF-a2S">
+                                <rect key="frame" x="0.0" y="572" width="414" height="236"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="SrP-mH-cSd" firstAttribute="leading" secondItem="Yyp-fj-kKn" secondAttribute="leading" id="TJM-2b-byl"/>
                             <constraint firstItem="SrP-mH-cSd" firstAttribute="top" secondItem="Yyp-fj-kKn" secondAttribute="top" id="lZh-6G-IWH"/>
                             <constraint firstItem="Yyp-fj-kKn" firstAttribute="trailing" secondItem="SrP-mH-cSd" secondAttribute="trailing" id="mGC-Td-h8q"/>
-                            <constraint firstItem="SrP-mH-cSd" firstAttribute="bottom" secondItem="Yyp-fj-kKn" secondAttribute="bottom" id="vKe-KQ-Skv"/>
+                            <constraint firstItem="SrP-mH-cSd" firstAttribute="bottom" secondItem="Yyp-fj-kKn" secondAttribute="bottom" constant="-244" id="vKe-KQ-Skv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Yyp-fj-kKn"/>
                     </view>
@@ -181,13 +185,21 @@
                                 <action selector="close:" destination="MAL-iF-QUC" id="biz-Ls-sRO"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="r7x-ZZ-Ykg">
-                            <connections>
-                                <action selector="save:" destination="MAL-iF-QUC" id="hyk-ki-h02"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="save" id="r7x-ZZ-Ykg">
+                                <connections>
+                                    <action selector="save:" destination="MAL-iF-QUC" id="hyk-ki-h02"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="camera" id="ZVw-0x-i2k">
+                                <connections>
+                                    <action selector="addAction:" destination="MAL-iF-QUC" id="Dtv-Ua-7Fg"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="imageView" destination="miV-iF-a2S" id="xdF-Kk-ejf"/>
                         <outlet property="memoTextView" destination="SrP-mH-cSd" id="gD1-SW-8T8"/>
                     </connections>
                 </viewController>
