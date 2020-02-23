@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import CoreData
 
-class DetailViewController: UIViewController {
+class imageCell: UITableViewCell{
+
+    @IBOutlet weak var myImage: UIImageView!
+    
+}
+
+class DetailViewController: UIViewController{
     
     @IBOutlet weak var memoTableView: UITableView!
     
+    var memoarr = [Memo]()
     var memo: Memo?
-    
-    
+
     let formatter: DateFormatter={
         let f = DateFormatter()
         f.dateStyle = .long
@@ -56,10 +63,19 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+//        tableView.delegate = self as? UITableViewDelegate
+//        tableView.dataSource = self
+        memoTableView.dataSource = self;
+        memoTableView.delegate = self as? UITableViewDelegate
         token=NotificationCenter.default.addObserver(forName: ComposeViewController.memoDidChange, object: nil, queue: OperationQueue.main, using: {[weak self] (noti) in
             self?.memoTableView.reloadData()
         })
+        func numberOfSections(in tableView: UITableView) -> Int{
+            return 1
+        }
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+            return memo?.imag?.count ?? 0
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -77,7 +93,10 @@ class DetailViewController: UIViewController {
 }
 
 extension DetailViewController: UITableViewDataSource{
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        guard let num : Int = memo?.imag?.count else { return 0 }
         return 2
     }
     
@@ -90,15 +109,27 @@ extension DetailViewController: UITableViewDataSource{
             
             return cell
         case 1:
+             let arr = DatabaseHelper.instance.getAllImages()
+//            let arr1 = DataManger.shared.getAllImages()
             let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
+            cell.textLabel?.text = formatter.string(for: memo?.insertDate) //되는것
+//            cell.imageView?.image = UIImage(data: arr1[0].imag!)
+//            cell.textLabel?.text = formatter.string(for: memo?.insertDate)
+                       
+//            cell.imageView?.image = UIImage(data: arr1[0].imag!)
+             cell.imageView?.image = UIImage(data: arr[0].img!) //되는것
+
             
-            cell.textLabel?.text = formatter.string(for: memo?.insertDate)
             
+//            var imgArr : [Data] = []
+//            imgArr.append((memo?.imag?[0])!)
+//            cell.imageView?.image = UIImage(data: memo!.imag?[indexPath.row])
+//            cell.imageView?.image = UIImage(data : ((memo?.imag?[indexPath.row])!))
             return cell
+       
         default:
             fatalError()
         }
     }
-    
-    
 }
+

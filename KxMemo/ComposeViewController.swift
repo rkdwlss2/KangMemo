@@ -9,15 +9,17 @@
 import UIKit
 
 class ComposeViewController: UIViewController {
-    
     let picker = UIImagePickerController()
     
+    var imgArr : [UIImage] = []
     var editTarget: Memo?
     var originalMemoContent: String?
     
     
     
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+//    @IBOutlet weak var imageView: UIImageView!
     
     
     @IBAction func addAction(_ sender: Any) {
@@ -28,11 +30,15 @@ class ComposeViewController: UIViewController {
         let camera = UIAlertAction(title: "카메라", style: .default){
             (action) in self.openCamera()
         }
+        let url = UIAlertAction(title: "URL", style: .default){
+            (action) in self.openURL()
+        }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         
         alert.addAction(library)
         
         alert.addAction(camera)
+        alert.addAction(url)
         alert.addAction(cancel)
         
         present(alert, animated: true, completion: nil)
@@ -51,8 +57,37 @@ class ComposeViewController: UIViewController {
         }
         
     }
-    
-    
+    func openURL(){
+        var urlkey = "https://i.ibb.co/fN6VCxh/2020-02-23-8-18-16.png"
+        let alert = UIAlertController(title: "alert", message: "textField", preferredStyle: .alert)
+        alert.addTextField()
+                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+                    urlkey = (alert.textFields?[0].text)!
+                if let url1 = URL(string: urlkey){
+                            do {
+                                let data = try Data(contentsOf: url1)
+                                if let image = UIImage(data: data){
+                                    self.imgArr.append(image)}
+                //                picker.sourceType = UIImage(data
+                //                present(picker,animated: false,completion: nil)
+                                self.collectionView.reloadData()
+                            }catch let err{
+                                print(" Error : \(err.localizedDescription)")
+                            }
+                        }
+        }
+                let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+                     //code
+                }
+                alert.addAction(cancel)
+                alert.addAction(ok)
+                self.present(alert, animated: true, completion: nil)
+
+        
+        
+        
+    }
+   
     @IBAction func close(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -62,7 +97,11 @@ class ComposeViewController: UIViewController {
     @IBAction func save(_ sender: Any) {
         guard let memo = memoTextView.text,
             memo.count > 0 else {
-            alert(message: "메모를 입력하세요")
+//                alert(message: "메모를 입력하세요");
+//                return
+                let alert = UIAlertController(title: "부탁드립니다", message: "메모를 입력하세요", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                present(alert,animated: true, completion: nil)
                 return
         }
 //        let newMemo = Memo(content: memo)
@@ -70,10 +109,16 @@ class ComposeViewController: UIViewController {
         
         if let target = editTarget{
             target.content=memo
+
             DataManger.shared.saveContext()
             NotificationCenter.default.post(name: ComposeViewController.memoDidChange, object: nil)
         } else{
-            DataManger.shared.addNewMemo(memo)
+            var imageData : [Data] = []
+            for i in 0..<imageData.count {
+                imageData.append(imgArr[i].pngData()! as Data)
+            }
+//             let imageData:NSData = imgArr[0].pngData()! as NSData
+            DataManger.shared.addNewMemo(memo,imageData)
             NotificationCenter.default.post(name: ComposeViewController.newMemoDidInsert,object: nil)
         }
         
@@ -169,10 +214,41 @@ UINavigationControllerDelegate{
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            imageView.image = image
+            imgArr.append(image)
+            if let png = image.pngData(){
+                DatabaseHelper.instance.saveImageinCoredata(at: png)
+            }
+            
+            
+//            let imageData:NSDate = UIImagePNGRepresentation(image)! as NSDate
+            
+//            imageView.image = image
             //            imageView.image = image
-            print(info)
+            collectionView.reloadData()
+//            print(info)
         }
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ComposeViewController : UICollectionViewDataSource, UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imgArr.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? DataCollectionViewCell
+        cell?.img.image = imgArr[indexPath.row]
+        cell?.index=indexPath
+        cell?.delegate = self
+        return cell!
+    }
+    
+}
+
+extension ComposeViewController: DataCollectionProtocol{
+    
+    func deleteData(indx: Int){
+        imgArr.remove(at: indx)
+        collectionView.reloadData()
     }
 }
