@@ -15,7 +15,7 @@ class ComposeViewController: UIViewController {
     var editTarget: Memo?
     var originalMemoContent: String?
     
-    
+  
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -113,12 +113,18 @@ class ComposeViewController: UIViewController {
             DataManger.shared.saveContext()
             NotificationCenter.default.post(name: ComposeViewController.memoDidChange, object: nil)
         } else{
-            var imageData : [Data] = []
-            for i in 0..<imageData.count {
-                imageData.append(imgArr[i].pngData()! as Data)
-            }
+//            var imageData : [Data] = []
+//            for i in 0..<imageData.count {
+//                imageData.append(imgArr[i].pngData()! as Data)
+//            }
+            if imgArr.count > 0{
+                let image:UIImage = imgArr[0] as UIImage
 //             let imageData:NSData = imgArr[0].pngData()! as NSData
-            DataManger.shared.addNewMemo(memo,imageData)
+                DataManger.shared.addNewMemo(memo,image)}
+            else{
+                
+                DataManger.shared.addNewMemo(memo,UIImage(named: "hi24")!)
+            }
             NotificationCenter.default.post(name: ComposeViewController.newMemoDidInsert,object: nil)
         }
         
@@ -252,3 +258,4 @@ extension ComposeViewController: DataCollectionProtocol{
         collectionView.reloadData()
     }
 }
+

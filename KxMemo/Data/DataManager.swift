@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 
 class DataManger{
@@ -14,7 +15,7 @@ class DataManger{
     private init() {
         //Singleton
     }
-
+    
     var mainContext: NSManagedObjectContext{
         return persistentContainer.viewContext
     }
@@ -36,27 +37,18 @@ class DataManger{
     
     
     
-    func addNewMemo(_ memo: String?,_ UIImage: Array<Data>){
+    func addNewMemo(_ memo: String?,_ imageData:UIImage){
         let newMemo = Memo(context: mainContext)
-        
-        
+        newMemo.content = memo
+        newMemo.insertDate = Date()
 //        newMemo.imag = UIImage[0] as Data
 //        newMemo.imag = UIImage[0] as Data
-//        for i in 0..<UIImage.count{
-        for i in 0..<UIImage.count{
-            newMemo.content = memo
-            newMemo.insertDate = Date()
-           newMemo.imag = UIImage[i]
-            memoList.insert(newMemo, at:0)
-            saveContext()
-        }
-            
-//        }
+        newMemo.imag = imageData.pngData()
         //        newMemo.imag =image
- //       memoList.insert(newMemo, at: 0)
+        memoList.insert(newMemo, at: 0)
         
+        saveContext()
         
-        print(newMemo.imag ?? UIImage)
     }
     
     func deleteMemo(_ memo: Memo?){
@@ -64,16 +56,15 @@ class DataManger{
             mainContext.delete(memo)
             saveContext()
         }
-        
     }
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {
-
+        
         let container = NSPersistentContainer(name: "KxMemo")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-
+                
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -95,15 +86,6 @@ class DataManger{
             }
         }
     }
-    func getAllImages() -> [Memo]{
-        var arrProfile = [Memo]()
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
-        do{
-            arrProfile = try mainContext.fetch(fetchRequest) as! [Memo]
-        }catch let error{
-            print(error.localizedDescription)
-        }
-        return arrProfile
-    }
-
 }
+
+

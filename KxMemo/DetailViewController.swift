@@ -19,7 +19,6 @@ class DetailViewController: UIViewController{
     
     @IBOutlet weak var memoTableView: UITableView!
     
-    var memoarr = [Memo]()
     var memo: Memo?
 
     let formatter: DateFormatter={
@@ -97,7 +96,7 @@ extension DetailViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        guard let num : Int = memo?.imag?.count else { return 0 }
-        return 2
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -108,25 +107,25 @@ extension DetailViewController: UITableViewDataSource{
             cell.textLabel?.text = memo?.content
             
             return cell
-        case 1:
-             let arr = DatabaseHelper.instance.getAllImages()
-//            let arr1 = DataManger.shared.getAllImages()
-            let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
-            cell.textLabel?.text = formatter.string(for: memo?.insertDate) //되는것
-//            cell.imageView?.image = UIImage(data: arr1[0].imag!)
-//            cell.textLabel?.text = formatter.string(for: memo?.insertDate)
-                       
-//            cell.imageView?.image = UIImage(data: arr1[0].imag!)
-             cell.imageView?.image = UIImage(data: arr[0].img!) //되는것
+      case 1:
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath)
+                    
+                    cell.textLabel?.text = formatter.string(for: memo?.insertDate)
+        //            var imgArr : [Data] = []
+        //            imgArr.append((memo?.imag!)!)
+        //            cell.imageView?.image = UIImage(data: memo!.imag?[indexPath.row])
+        //            cell.imageView?.image = UIImage(data : ((memo?.imag?[indexPath.row])!))
+                    return cell
+            case 2:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "imageCell", for: indexPath) 
+                print(memo?.imag as Any)
+                if let imageData = memo?.imag {
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+                    imageView.image = UIImage(data : imageData)
+                    cell.addSubview(imageView)
+                }
+                return cell
 
-            
-            
-//            var imgArr : [Data] = []
-//            imgArr.append((memo?.imag?[0])!)
-//            cell.imageView?.image = UIImage(data: memo!.imag?[indexPath.row])
-//            cell.imageView?.image = UIImage(data : ((memo?.imag?[indexPath.row])!))
-            return cell
-       
         default:
             fatalError()
         }

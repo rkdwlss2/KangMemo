@@ -73,7 +73,11 @@ class MemoListTableViewController: UITableViewController {
         let target = DataManger.shared.memoList[indexPath.row]
         cell.textLabel?.text=target.content
         cell.detailTextLabel?.text=formatter.string(for: target.insertDate)
-        
+        if let imageData = target.imag {
+//            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+            cell.imageView?.image = UIImage(data : imageData)
+//            cell.addSubview(cell.imageView)
+        }
         return cell
     }
     
